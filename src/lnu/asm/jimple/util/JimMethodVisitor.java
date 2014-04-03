@@ -1,4 +1,4 @@
-package lnu.asm.printer;
+package lnu.asm.jimple.util;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ import org.objectweb.asm.Type;
 import org.objectweb.asm.signature.SignatureReader;
 import org.objectweb.asm.util.TraceSignatureVisitor;
 
-public class PrintMethodVisitor extends MethodVisitor {
+public class JimMethodVisitor extends MethodVisitor {
 
 	private StringBuilder buf = new StringBuilder();
 	private static String[] OPCODES = org.objectweb.asm.util.Printer.OPCODES;
@@ -113,7 +113,7 @@ public class PrintMethodVisitor extends MethodVisitor {
      *            the ASM API version implemented by this visitor. Must be one
      *            of {@link Opcodes#ASM4}.
      */
-    public PrintMethodVisitor() {
+    public JimMethodVisitor() {
         super(Opcodes.ASM4, null);
     }
 
@@ -127,7 +127,7 @@ public class PrintMethodVisitor extends MethodVisitor {
      *            the method visitor to which this visitor must delegate method
      *            calls. May be null.
      */
-    public PrintMethodVisitor(final MethodVisitor mv) {
+    public JimMethodVisitor(final MethodVisitor mv) {
     	super(Opcodes.ASM4, mv);
     }
     
@@ -399,7 +399,7 @@ public class PrintMethodVisitor extends MethodVisitor {
     public void visitVarInsn(final int opcode, final int var) {
         buf.setLength(0);
         buf.append(tab2).append(OPCODES[opcode]).append(' ').append(var);
-        System.out.println("-----------------------");
+       
         System.out.println(buf.toString());
     }
 

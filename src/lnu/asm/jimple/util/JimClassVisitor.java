@@ -1,19 +1,29 @@
-package lnu.asm.printer;
+package lnu.asm.jimple.util;
 
 
+import java.util.HashMap;
+
+import lnu.asm.jimple.VerboseJimple;
 
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodNode;
 
-public class ClassPrinter extends ClassVisitor {
+public class JimClassVisitor extends ClassVisitor{
+	protected ClassNode cn;
+	protected HashMap<String,MethodNode> methodList=new HashMap<String,MethodNode>();
 
-	public ClassPrinter() {
+	public JimClassVisitor() {
 		super(Opcodes.ASM4);
-		//this.cn=cn;
-		//startPrint();
+	}
+	public JimClassVisitor(ClassNode cn) {
+		super(Opcodes.ASM4);
+		this.cn=cn;
+		setMethodMap();
 	}
 	
 	public void startPrint(){
@@ -37,15 +47,22 @@ public class ClassPrinter extends ClassVisitor {
 	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions){
 		System.out.println("Method "+name +"  -----  "+ desc);
 		MethodVisitor mv;
+		MethodNode mn=methodList.get(name+desc);
 		mv=super.visitMethod(access, name, desc, signature, exceptions);
 		//System.out.println("TTTTTTTTTTT=====> "+super.visitMethod(access, name, desc,signature, exceptions));
 		
-		return new PrintMethodVisitor(mv);
+		return new VerboseJimple(mv,mn);
 	}
 	
 	public void visitEnd(){
 		System.out.println("}");
 	}
 	
+	
+	public void setMethodMap(){
+		for(MethodNode mn :cn.methods){
+			methodList.put(mn.name+mn.desc, mn);
+		}	
+	}
 	
 }
