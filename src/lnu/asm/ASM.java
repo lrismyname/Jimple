@@ -14,8 +14,7 @@ import org.objectweb.asm.tree.ClassNode;
 
 public class ASM {
 	private static final HashSet<String> missing = new HashSet<String>();
-	private static final HashMap<String,ClassNode> name2node = new HashMap<String,ClassNode>();
-	
+	private static final HashMap<String,ClassNode> name2node = new HashMap<String,ClassNode>();	
 	public static ClassNode getClassNode(String className) {
 		ClassNode classNode = name2node.get(className);
 		if (classNode == null && !missing.contains(className)) {
@@ -38,6 +37,12 @@ public class ASM {
 		return classNode;
 	}
 	
+	public static boolean isArrayType(String className) {
+		return className.startsWith("[");
+	}
+	
+	
+	/* -------- Code found on StackOverflow to configure the ASM class path -------- */
 	public static void addPath(String path) {
 		File path_file = new File(path);
 		addPath(path_file);

@@ -16,15 +16,7 @@ public class ClassPrinter extends ClassVisitor {
 		//startPrint();
 	}
 	
-	public void startPrint(){
-		//cn.accept(this);
-		/*PrintMethodVisitor pmv; 
-		methodNode = (ArrayList<MethodNode>) cn.methods;
-		for(MethodNode mn :methodNode){
-			pmv= new PrintMethodVisitor(mn);
-			mn.accept(pmv);
-		}*/	
-	}
+
 	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces){
 		System.out.println(name + " extends " +superName+"{");
 	}
